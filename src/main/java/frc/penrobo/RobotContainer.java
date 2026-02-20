@@ -20,10 +20,10 @@ import swervelib.SwerveInputStream;
 public class RobotContainer {
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
-  private AnalogEncoder encoder1 = new AnalogEncoder(0);
+  /*private AnalogEncoder encoder1 = new AnalogEncoder(0);
   private AnalogEncoder encoder2 = new AnalogEncoder(1);
   private AnalogEncoder encoder3 = new AnalogEncoder(2);
-  private AnalogEncoder encoder4 = new AnalogEncoder(3);
+  private AnalogEncoder encoder4 = new AnalogEncoder(3);*/
 
   private final CJoystick joystick = new CJoystick(OperatorConstants.driverControllerPort);
 
@@ -64,13 +64,13 @@ public class RobotContainer {
    */
 
   public void periodic() {
-    if (System.currentTimeMillis() - lastLogTime > 300) {
-      String output = String.format(
-          "Encoder 1 angle: %f, Encoder 2 angle: %f, Encoder 3 angle: %f, Encoder 4 angle: %f",
-          encoder1.get() - 0.718789, encoder2.get() - 0.832463, encoder3.get() - 0.249788, encoder4.get() - 0.602895);
+    // if (System.currentTimeMillis() - lastLogTime > 300) {
+    //   String output = String.format(
+    //       "Encoder 1 angle: %f, Encoder 2 angle: %f, Encoder 3 angle: %f, Encoder 4 angle: %f",
+    //       encoder1.get() - 0.718789, encoder2.get() - 0.832463, encoder3.get() - 0.249788, encoder4.get() - 0.602895);
 
-      System.out.println(output);
-      lastLogTime = System.currentTimeMillis();
-    }
+    //   System.out.println(output);
+    //   lastLogTime = System.currentTimeMillis();
+    // }
   }
 }
