@@ -6,36 +6,41 @@ package frc.penrobo;
 
 import java.io.File;
 
-import edu.wpi.first.wpilibj.AnalogEncoder;
+import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkMax;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.penrobo.Constants.OperatorConstants;
+import frc.penrobo.commands.Shoot;
+import frc.penrobo.subsystem.Shooter;
 import frc.penrobo.subsystem.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
 public class RobotContainer {
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
-  /*private AnalogEncoder encoder1 = new AnalogEncoder(0);
-  private AnalogEncoder encoder2 = new AnalogEncoder(1);
-  private AnalogEncoder encoder3 = new AnalogEncoder(2);
-  private AnalogEncoder encoder4 = new AnalogEncoder(3);*/
-
   private final CJoystick joystick = new CJoystick(OperatorConstants.driverControllerPort);
 
-  private SwerveSubsystem swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
+  private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(
+      new File(Filesystem.getDeployDirectory(), "swerve"));
 
-  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
+  private final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
       () -> joystick.getY() * -1,
       () -> joystick.getX() * -1)
       .withControllerRotationAxis(joystick::getZ)
       .deadband(OperatorConstants.deadband)
       .scaleTranslation(0.8)
       .allianceRelativeControl(true);
+
+  private final Shooter shooter = new Shooter(
+      new SparkFlex(10, SparkFlex.MotorType.kBrushless),
+      new SparkMax(11, SparkMax.MotorType.kBrushless));
 
   public RobotContainer() {
     // Point the parser at your deploy directory
@@ -50,27 +55,14 @@ public class RobotContainer {
   private void configureBindings() {
     Command swerveDriveCommand = swerveSubsystem.driveFieldOriented(driveAngularVelocity);
     swerveSubsystem.setDefaultCommand(swerveDriveCommand);
+
+    new Trigger(() -> joystick.getRawButton(2)).whileTrue(new Shoot(shooter));
   }
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
   }
 
-  long lastLogTime = 0;
-
-  /**
-   * Encoder 1 angle: 0.718789, Encoder 2 angle: 0.832463, Encoder 3 angle:
-   * 0.249788, Encoder 4 angle: 0.602895
-   */
-
   public void periodic() {
-    // if (System.currentTimeMillis() - lastLogTime > 300) {
-    //   String output = String.format(
-    //       "Encoder 1 angle: %f, Encoder 2 angle: %f, Encoder 3 angle: %f, Encoder 4 angle: %f",
-    //       encoder1.get() - 0.718789, encoder2.get() - 0.832463, encoder3.get() - 0.249788, encoder4.get() - 0.602895);
-
-    //   System.out.println(output);
-    //   lastLogTime = System.currentTimeMillis();
-    // }
   }
 }
