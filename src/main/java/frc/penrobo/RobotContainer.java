@@ -17,7 +17,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.penrobo.Constants.OperatorConstants;
+import frc.penrobo.commands.IntakeCommand;
+import frc.penrobo.commands.OuttakeCommand;
+import frc.penrobo.commands.RampUpShooter;
 import frc.penrobo.commands.Shoot;
+import frc.penrobo.subsystem.Intake;
 import frc.penrobo.subsystem.Shooter;
 import frc.penrobo.subsystem.SwerveSubsystem;
 import swervelib.SwerveInputStream;
@@ -42,6 +46,10 @@ public class RobotContainer {
       new SparkFlex(10, SparkFlex.MotorType.kBrushless),
       new SparkMax(11, SparkMax.MotorType.kBrushless));
 
+  private final Intake intake = new Intake(
+      new SparkMax(12, SparkMax.MotorType.kBrushless),
+      new SparkMax(13, SparkMax.MotorType.kBrushless));
+
   public RobotContainer() {
     // Point the parser at your deploy directory
     // YAGSL reads the JSONs and builds the entire kinematics engine for you
@@ -57,6 +65,10 @@ public class RobotContainer {
     swerveSubsystem.setDefaultCommand(swerveDriveCommand);
 
     new Trigger(() -> joystick.getRawButton(2)).whileTrue(new Shoot(shooter));
+    new Trigger(() -> joystick.getRawButton(1)).onTrue(new RampUpShooter(shooter));
+
+    new Trigger(() -> joystick.getPOV() == 0).whileTrue(new IntakeCommand(intake));
+    new Trigger(() -> joystick.getPOV() == 180).whileTrue(new OuttakeCommand(intake));
   }
 
   public Command getAutonomousCommand() {

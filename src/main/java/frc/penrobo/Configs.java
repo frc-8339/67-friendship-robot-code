@@ -3,7 +3,7 @@ package frc.penrobo;
 import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-public class PIDConfig {
+public class Configs {
     public static final class Shooter {
         public static final class Feed {
             public static final SparkMaxConfig feedConfig = new SparkMaxConfig();

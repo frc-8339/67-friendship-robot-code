@@ -10,8 +10,21 @@ public class Shooter extends SubsystemBase {
     private final SparkMax feedMotor;
 
     public Shooter(SparkFlex shooterMotor, SparkMax feedMotor) {
+        shooterMotor.setInverted(true);
         this.shooterMotor = shooterMotor;
         this.feedMotor = feedMotor;
+    }
+
+    public void setShooterSpeed(double speed) {
+        shooterMotor.set(speed);
+    }
+
+    public void setFeedSpeed(double speed) {
+        feedMotor.set(speed);
+    }
+
+    public void rampUp() {
+        shooterMotor.set(1);
     }
 
     public void shoot() {
