@@ -36,11 +36,11 @@ public class RobotContainer {
 
   private final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
       () -> joystick.getY(),
-      () -> joystick.getX() * -1)
+      () -> joystick.getX())
       .withControllerRotationAxis(joystick::getZ)
       .deadband(OperatorConstants.deadband)
       .scaleTranslation(0.8)
-      .allianceRelativeControl(true);
+      .allianceRelativeControl(false);
 
   private final Shooter shooter = new Shooter(
       new SparkFlex(10, SparkFlex.MotorType.kBrushless),
@@ -63,6 +63,8 @@ public class RobotContainer {
   private void configureBindings() {
     Command swerveDriveCommand = swerveSubsystem.driveFieldOriented(driveAngularVelocity);
     swerveSubsystem.setDefaultCommand(swerveDriveCommand);
+
+    new Trigger(() -> joystick.getRawButton(3)).whileTrue(swerveSubsystem.driveForward());
 
     new Trigger(() -> joystick.getRawButton(2)).whileTrue(new Shoot(shooter));
     new Trigger(() -> joystick.getRawButton(1)).onTrue(new RampUpShooter(shooter));

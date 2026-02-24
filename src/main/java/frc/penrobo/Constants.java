@@ -9,8 +9,8 @@ public class Constants {
     }
 
     public static final class SwerveConstants {
-        public static final double maxSpeed = Units.feetToMeters(16.8); // meters per second
-        // public static final double maxSpeed = Units.feetToMeters(2.5); // meters per
+        // public static final double maxSpeed = Units.feetToMeters(16.8); // meters per
         // second
+        public static final double maxSpeed = Units.feetToMeters(2.5); // meters per second
     }
 }
