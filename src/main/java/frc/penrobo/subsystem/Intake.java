@@ -10,6 +10,8 @@ public class Intake extends SubsystemBase {
 
     public Intake(SparkMax intakeMotor, SparkMax liftMotor) {
         this.intakeMotor = intakeMotor;
+        intakeMotor.setInverted(true);
+
         this.liftMotor = liftMotor;
     }
 

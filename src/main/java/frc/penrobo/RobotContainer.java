@@ -37,10 +37,10 @@ public class RobotContainer {
   private final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
       () -> joystick.getY(),
       () -> joystick.getX())
-      .withControllerRotationAxis(joystick::getZ)
+      .withControllerRotationAxis(() -> -joystick.getZ())
       .deadband(OperatorConstants.deadband)
       .scaleTranslation(0.8)
-      .allianceRelativeControl(false);
+      .allianceRelativeControl(true);
 
   private final Shooter shooter = new Shooter(
       new SparkFlex(10, SparkFlex.MotorType.kBrushless),
@@ -58,6 +58,10 @@ public class RobotContainer {
     DriverStation.silenceJoystickConnectionWarning(true);
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
+
+    // Rotation3d gyroOffset = new Rotation3d(0, 0, Math.toRadians(180));
+
+    // swerveSubsystem.getSwerveDrive().setGyroOffset(gyroOffset);
   }
 
   private void configureBindings() {
