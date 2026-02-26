@@ -35,9 +35,9 @@ public class RobotContainer {
       new File(Filesystem.getDeployDirectory(), "swerve"));
 
   private final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
-      () -> joystick.getY(),
+      () -> -joystick.getY(),
       () -> joystick.getX())
-      .withControllerRotationAxis(() -> -joystick.getZ())
+      .withControllerRotationAxis(() -> joystick.getZ())
       .deadband(OperatorConstants.deadband)
       .scaleTranslation(0.8)
       .allianceRelativeControl(true);
