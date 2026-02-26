@@ -9,12 +9,14 @@ import java.io.File;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
 
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.penrobo.Constants.OperatorConstants;
 import frc.penrobo.commands.IntakeCommand;
@@ -36,8 +38,8 @@ public class RobotContainer {
 
   private final SwerveInputStream driveAngularVelocity = SwerveInputStream.of(swerveSubsystem.getSwerveDrive(),
       () -> -joystick.getY(),
-      () -> joystick.getX())
-      .withControllerRotationAxis(() -> joystick.getZ())
+      () -> -joystick.getX())
+      .withControllerRotationAxis(() -> -joystick.getZ())
       .deadband(OperatorConstants.deadband)
       .scaleTranslation(0.8)
       .allianceRelativeControl(true);
@@ -69,6 +71,12 @@ public class RobotContainer {
     swerveSubsystem.setDefaultCommand(swerveDriveCommand);
 
     new Trigger(() -> joystick.getRawButton(3)).whileTrue(swerveSubsystem.driveForward());
+    new Trigger(() -> joystick.getRawButton(4))
+        .whileTrue(new RunCommand(() -> swerveSubsystem.drive(new Translation2d(-1, 0), 0, false), swerveSubsystem));
+    new Trigger(() -> joystick.getRawButton(5))
+        .whileTrue(new RunCommand(() -> swerveSubsystem.drive(new Translation2d(0, 1), 0, false), swerveSubsystem));
+    new Trigger(() -> joystick.getRawButton(6))
+        .whileTrue(new RunCommand(() -> swerveSubsystem.drive(new Translation2d(0, -1), 0, false), swerveSubsystem));
 
     new Trigger(() -> joystick.getRawButton(2)).whileTrue(new Shoot(shooter));
     new Trigger(() -> joystick.getRawButton(1)).onTrue(new RampUpShooter(shooter));
