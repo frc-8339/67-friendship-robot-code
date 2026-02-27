@@ -5,6 +5,7 @@ import edu.wpi.first.math.util.Units;
 public class Constants {
     public static final class OperatorConstants {
         public static final int driverControllerPort = 0;
+        public static final int secondaryControllerPort = 1;
         public static final double deadband = 0.08;
     }
 

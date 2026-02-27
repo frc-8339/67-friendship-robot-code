@@ -4,68 +4,31 @@
     {
       "anchor": {
         "x": 2.0,
-        "y": 7.0
+        "y": 0.4396846846802851
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.050664414414415,
-        "y": 7.283040540540541
+        "x": 3.9392792792792797,
+        "y": 1.6857882882882878
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.999594594594595,
-        "y": 5.771373873873874
+        "x": 2.2539752252226952,
+        "y": 3.9022184684640697
       },
       "prevControl": {
-        "x": 2.885962168675009,
-        "y": 6.025375767105889
-      },
-      "nextControl": {
-        "x": 3.1732319819819823,
-        "y": 5.3832432432432435
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 5.767578828828829,
-        "y": 7.201328828828829
-      },
-      "prevControl": {
-        "x": 4.767578828828829,
-        "y": 7.201328828828829
-      },
-      "nextControl": {
-        "x": 6.767578828828829,
-        "y": 7.201328828828829
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 6.6868355855855865,
-        "y": 6.118648648648649
-      },
-      "prevControl": {
-        "x": 9.893536036036034,
-        "y": 7.002156531531532
+        "x": 2.3960850859917855,
+        "y": 3.696537192038164
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.025392986698913,
-      "rotationDegrees": -49.24052628033129
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [
     {
@@ -74,12 +37,19 @@
         "y": 4.0
       },
       "rotationOffset": 0.0,
-      "minWaypointRelativePos": 0.3008021390374329,
-      "maxWaypointRelativePos": 0.75,
+      "minWaypointRelativePos": 0.20320855614973257,
+      "maxWaypointRelativePos": 1.0,
       "name": "Point Towards Zone"
     }
   ],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "RampShooter",
+      "waypointRelativePos": 0.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -90,13 +60,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 2.2506408970375325
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }
