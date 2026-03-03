@@ -18,8 +18,13 @@ public class RampUpShooter extends Command {
     }
 
     @Override
+    public void execute() {
+        shooter.rampUp();
+    }
+
+    @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     @Override
