@@ -22,4 +22,9 @@ public class RampUpShooter extends Command {
         return true;
     }
 
+    @Override
+    public void end(boolean interrupted) {
+        shooter.stop();
+    }
+
 }

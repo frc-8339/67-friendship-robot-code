@@ -3,17 +3,17 @@ package frc.penrobo.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.penrobo.subsystem.Lift;
 
-public class ExtrudeLift extends Command {
+public class RetractLift extends Command {
     private final Lift lift;
 
-    public ExtrudeLift(Lift lift) {
+    public RetractLift(Lift lift) {
         this.lift = lift;
         addRequirements(lift);
     }
 
     @Override
     public void initialize() {
-        lift.preciseExtrude();
+        lift.preciseRetract();
     }
 
     @Override
