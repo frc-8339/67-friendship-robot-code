@@ -9,11 +9,17 @@ public class Intake extends SubsystemBase {
     private final SparkMax intakeMotor;
     private final SparkMax liftMotor;
 
+    public double liftSetpoint = 0;
+
     public Intake(SparkMax intakeMotor, SparkMax liftMotor) {
         this.intakeMotor = intakeMotor;
         intakeMotor.setInverted(true);
 
         this.liftMotor = liftMotor;
+    }
+
+    public double getLiftPosition() {
+        return liftMotor.getEncoder().getPosition();
     }
 
     public void setIntakeSpeed(double speed) {
@@ -23,19 +29,33 @@ public class Intake extends SubsystemBase {
     public void drop() {
         var controller = liftMotor.getClosedLoopController();
 
-        controller.setSetpoint(0, ControlType.kPosition);
+        controller.setSetpoint(-8, ControlType.kPosition);
     }
 
     public void retract() {
         var controller = liftMotor.getClosedLoopController();
 
-        controller.setSetpoint(0, ControlType.kPosition); // save starting position after technician put on field, start
-                                                          // robot at 0, then drop it down. code save the position of
-                                                          // the drop, and then retract back to it at end game.
+        controller.setSetpoint(0, ControlType.kPosition);
     }
 
-    public void manualLift() {
-        liftMotor.set(0.5);
+    public void manualDrop() {
+        liftMotor.set(0.4);
+    }
+
+    public void manualRetract() {
+        liftMotor.set(-0.4);
+    }
+
+    public void stopLift() {
+        liftMotor.stopMotor();
+    }
+
+    public void setLiftMotorPosition(double position) {
+        var controller = liftMotor.getClosedLoopController();
+
+        controller.setSetpoint(position, ControlType.kPosition);
+
+        liftSetpoint = position;
     }
 
 }

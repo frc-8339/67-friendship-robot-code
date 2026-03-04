@@ -53,7 +53,7 @@ public class Vision {
      * April Tag Field Layout of the year.
      */
     public static final AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(
-            AprilTagFields.k2025ReefscapeAndyMark);
+            AprilTagFields.k2026RebuiltAndymark);
     /**
      * Ambiguity defined as a value between (0,1). Used in
      * {@link Vision#filterPose}.
@@ -175,46 +175,6 @@ public class Vision {
                     });
         }
         return poseEst;
-    }
-
-    /**
-     * Filter pose via the ambiguity and find best estimate between all of the
-     * camera's throwing out distances more than
-     * 10m for a short amount of time.
-     *
-     * @param pose Estimated robot pose.
-     * @return Could be empty if there isn't a good reading.
-     */
-    @Deprecated(since = "2024", forRemoval = true)
-    private Optional<EstimatedRobotPose> filterPose(Optional<EstimatedRobotPose> pose) {
-        if (pose.isPresent()) {
-            double bestTargetAmbiguity = 1; // 1 is max ambiguity
-            for (PhotonTrackedTarget target : pose.get().targetsUsed) {
-                double ambiguity = target.getPoseAmbiguity();
-                if (ambiguity != -1 && ambiguity < bestTargetAmbiguity) {
-                    bestTargetAmbiguity = ambiguity;
-                }
-            }
-            // ambiguity to high dont use estimate
-            if (bestTargetAmbiguity > maximumAmbiguity) {
-                return Optional.empty();
-            }
-
-            // est pose is very far from recorded robot pose
-            if (PhotonUtils.getDistanceToPose(currentPose.get(), pose.get().estimatedPose.toPose2d()) > 1) {
-                longDistangePoseEstimationCount++;
-
-                // if it calculates that were 10 meter away for more than 10 times in a row its
-                // probably right
-                if (longDistangePoseEstimationCount < 10) {
-                    return Optional.empty();
-                }
-            } else {
-                longDistangePoseEstimationCount = 0;
-            }
-            return pose;
-        }
-        return Optional.empty();
     }
 
     /**
